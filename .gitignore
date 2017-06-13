@@ -28,3 +28,10 @@ proguard/
 *.iws
 .idea/
 
+/.idea
+.gradle
+/local.properties
+/app/build
+/build
+.gitignore
+
