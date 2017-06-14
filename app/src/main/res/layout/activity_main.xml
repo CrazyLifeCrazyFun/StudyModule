@@ -50,12 +50,12 @@
 
     </android.support.v4.view.ViewPager>
 
-    <com.xujun.administrator.customviewspecif.view.CirclePageIndicator
+    <study.meetpast.com.studymodule.view.CirclePageIndicator
         android:id="@+id/circle_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp">
 
-    </com.xujun.administrator.customviewspecif.view.CirclePageIndicator>
+    </study.meetpast.com.studymodule.view.CirclePageIndicator>
 </RelativeLayout>
