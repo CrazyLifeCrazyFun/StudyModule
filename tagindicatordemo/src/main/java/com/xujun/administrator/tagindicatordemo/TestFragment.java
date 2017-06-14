@@ -3,14 +3,14 @@ package com.xujun.administrator.tagindicatordemo;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.xujun.administrator.tagindicatordemo.base.BaseFragment;
+import com.xujun.administrator.tagindicatordemo.base.LazyLoadFragment;
 
 /**
  * @ explain:
  * @ author：xujun on 2016/7/30 19:19
  * @ email：gdutxiaoxu@163.com
  */
-public class TestFragment extends BaseFragment {
+public class TestFragment extends LazyLoadFragment {
 
     protected TextView mTvContent;
 
@@ -27,17 +27,17 @@ public class TestFragment extends BaseFragment {
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int setContentView() {
         return R.layout.fragment_test;
     }
 
     @Override
-    protected void initView() {
+    protected void lazyLoad() {
         position = getArguments().getInt(ARG_POSITION);
         String[] titles = getResources().getStringArray(R.array.fragments_titles);
-        mTvContent = (TextView) mView.findViewById(R.id.tv_content);
+        mTvContent = findViewById(R.id.tv_content);
         mTvContent.setText(titles[position]);
+        System.out.println("viewpager:"+titles[position]);
     }
-
 
 }
