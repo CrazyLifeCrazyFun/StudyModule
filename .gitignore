@@ -29,9 +29,8 @@ proguard/
 .idea/
 
 /.idea
-.gradle
+*.gradle
 /local.properties
-/app/build
 /build
 .gitignore
 
