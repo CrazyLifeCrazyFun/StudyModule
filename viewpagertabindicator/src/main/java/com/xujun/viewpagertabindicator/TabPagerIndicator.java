@@ -20,6 +20,8 @@ package com.xujun.viewpagertabindicator;/*
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -74,6 +76,9 @@ public class TabPagerIndicator extends HorizontalScrollView {
      * 记录当前的tab的position
      */
     private int currentPosition = 0;
+    /**
+     * 目前只考虑startoffset为正的情况
+     */
     public static final int startOffet=1;
 //    记录上一次position的位置
     private int lastSelectPosition = -1;
@@ -271,7 +276,6 @@ public class TabPagerIndicator extends HorizontalScrollView {
             } else {
                 addTextTab(i, pager.getAdapter().getPageTitle(i+startOffet).toString());
             }
-
         }
 
         updateTabStyles();
@@ -308,6 +312,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
         addTab(position, tab);
     }
+
 
     private void addIconTab(final int position, int resId) {
 
@@ -355,7 +360,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 TextView tab = (TextView) v;
                 tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
                 tab.setTypeface(tabTypeface, tabTypefaceStyle);
-                if(i==0 && pager.getCurrentItem()-startOffet==0){
+                if(i==pager.getCurrentItem()-startOffet){
                     tab.setTextColor(tabSelectTextColor);
                 }else{
                     tab.setTextColor(tabTextColor);
@@ -460,7 +465,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
     private class PageListener implements OnPageChangeListener {
 
-        private int selectCurPotition;
+        private int selectCurPotition=-1;
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
