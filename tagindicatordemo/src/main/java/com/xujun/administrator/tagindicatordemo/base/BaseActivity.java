@@ -41,14 +41,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    protected void initView() {
-    }
+    protected abstract void initView();
 
-    protected void initData() {
-    }
+    protected abstract void initData();
 
-    protected void initListener() {
-    }
+    protected abstract void initListener();
 
     @Override
     protected void onDestroy() {

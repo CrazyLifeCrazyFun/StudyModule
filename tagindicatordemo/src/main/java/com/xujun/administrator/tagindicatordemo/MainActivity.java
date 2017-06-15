@@ -21,6 +21,16 @@ public class MainActivity extends BaseActivity {
         btnPagIndicator = (Button) findViewById(R.id.btn_pagIndicator);
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
     public void onButtonClick(View view) {
         switch (view.getId()) {
             case R.id.btn_test:

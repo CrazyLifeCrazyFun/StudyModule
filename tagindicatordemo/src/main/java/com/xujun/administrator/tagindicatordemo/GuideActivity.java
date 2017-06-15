@@ -77,6 +77,11 @@ public class GuideActivity extends BaseActivity {
         mViewPager.addOnPageChangeListener(new PagerListener());
     }
 
+    @Override
+    protected void initListener() {
+
+    }
+
     class PagerListener extends ViewPager.SimpleOnPageChangeListener{
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
