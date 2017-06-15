@@ -74,6 +74,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
      * 记录当前的tab的position
      */
     private int currentPosition = 0;
+    private int startOffet=0;
 //    记录上一次position的位置
     private int lastSelectPosition = -1;
     private float currentPositionOffset = 0f;
@@ -320,7 +321,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                pager.setCurrentItem(position);
+                pager.setCurrentItem(position+startOffet);
             }
         });
         if (!isSame) {
@@ -405,7 +406,6 @@ public class TabPagerIndicator extends HorizontalScrollView {
         if (isInEditMode() || tabCount == 0) {
             return;
         }
-
         final int height = getHeight();
 
         // draw indicator line
@@ -460,10 +460,10 @@ public class TabPagerIndicator extends HorizontalScrollView {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            currentPosition = position;
+            currentPosition = position-startOffet;
             currentPositionOffset = positionOffset;
 
-            View child = tabsContainer.getChildAt(position);
+            View child = tabsContainer.getChildAt(currentPosition);
             int width = child.getWidth();
 
             if (isSame) {
@@ -471,7 +471,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
             }
 
             Log.i(TAG, "onPageScrolled:width=" + width);
-            scrollToChild(position, (int) (positionOffset * width));
+            scrollToChild(currentPosition, (int) (positionOffset * width));
             //调用这个方法重新绘制
             invalidate();
 
