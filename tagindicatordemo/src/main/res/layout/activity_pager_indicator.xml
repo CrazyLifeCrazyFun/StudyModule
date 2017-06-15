@@ -25,11 +25,24 @@
             android:text="切换模式"/>
 
     </RelativeLayout>
-
-    <com.xujun.viewpagertabindicator.TabPagerIndicator
-        android:id="@+id/pagerIndicator"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="全部分类"
+            android:gravity="center"
+            />
+        <com.xujun.viewpagertabindicator.TabPagerIndicator
+            android:id="@+id/pagerIndicator"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+
 
     <android.support.v4.view.ViewPager
         android:layout_weight="1"

@@ -74,7 +74,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
      * 记录当前的tab的position
      */
     private int currentPosition = 0;
-    private int startOffet=0;
+    public static final int startOffet=1;
 //    记录上一次position的位置
     private int lastSelectPosition = -1;
     private float currentPositionOffset = 0f;
@@ -92,7 +92,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
     private boolean isSame = false;
     private boolean textAllCaps = true;
 
-    private int scrollOffset = 52;
+    private int scrollOffset = 0;
     private int indicatorHeight = 4;
     private int underlineHeight = 2;
     private int dividerPadding = 12;
@@ -262,14 +262,14 @@ public class TabPagerIndicator extends HorizontalScrollView {
         //先移除掉所有的View ，防止重复添加
         tabsContainer.removeAllViews();
 
-        tabCount = pager.getAdapter().getCount();
+        tabCount = pager.getAdapter().getCount()-startOffet;
 
         for (int i = 0; i < tabCount; i++) {
             //区分是文字还是Icon的导航
             if (pager.getAdapter() instanceof IconTabProvider) {
                 addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
             } else {
-                addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+                addTextTab(i, pager.getAdapter().getPageTitle(i+startOffet).toString());
             }
 
         }
@@ -289,8 +289,10 @@ public class TabPagerIndicator extends HorizontalScrollView {
                     getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
 
-                currentPosition = pager.getCurrentItem();
-                scrollToChild(currentPosition, 0);
+                currentPosition = pager.getCurrentItem()-startOffet;
+                if(currentPosition>=0){
+                    scrollToChild(currentPosition, 0);
+                }
 
             }
         });
@@ -353,7 +355,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 TextView tab = (TextView) v;
                 tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabTextSize);
                 tab.setTypeface(tabTypeface, tabTypefaceStyle);
-                if(i==0 && pager.getCurrentItem()==0){
+                if(i==0 && pager.getCurrentItem()-startOffet==0){
                     tab.setTextColor(tabSelectTextColor);
                 }else{
                     tab.setTextColor(tabTextColor);
@@ -413,25 +415,28 @@ public class TabPagerIndicator extends HorizontalScrollView {
         rectPaint.setColor(indicatorColor);
 
         // default: line below current tab
-        View currentTab = tabsContainer.getChildAt(currentPosition);
-        float lineLeft = currentTab.getLeft();
-        float lineRight = currentTab.getRight();
+        if(currentPosition>=0){
 
-        // if there is an offset, start interpolating left and right coordinates between current
-        // and next tab
-        if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
+            View currentTab = tabsContainer.getChildAt(currentPosition);
+            float lineLeft = currentTab.getLeft();
+            float lineRight = currentTab.getRight();
 
-            View nextTab = tabsContainer.getChildAt(currentPosition + 1);
-            final float nextTabLeft = nextTab.getLeft();
-            final float nextTabRight = nextTab.getRight();
+            // if there is an offset, start interpolating left and right coordinates between current
+            // and next tab
+            if (currentPositionOffset > 0f && currentPosition < tabCount - 1) {
 
-            lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) *
-                    lineLeft);
-            lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) *
-                    lineRight);
+                View nextTab = tabsContainer.getChildAt(currentPosition + 1);
+                final float nextTabLeft = nextTab.getLeft();
+                final float nextTabRight = nextTab.getRight();
+
+                lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) *
+                        lineLeft);
+                lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) *
+                        lineRight);
+            }
+
+            canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
         }
-
-        canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
         // draw underline
 
@@ -459,22 +464,21 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                currentPosition = position-startOffet;
+                currentPositionOffset = positionOffset;
+            if(currentPosition>=0){
 
-            currentPosition = position-startOffet;
-            currentPositionOffset = positionOffset;
+                View child = tabsContainer.getChildAt(currentPosition);
+                int width = child.getWidth();
 
-            View child = tabsContainer.getChildAt(currentPosition);
-            int width = child.getWidth();
-
-            if (isSame) {
-                width += horizontalPadding * 2;
+                if (isSame) {
+                    width += horizontalPadding * 2;
+                }
+                Log.i(TAG, "onPageScrolled:width=" + width);
+                scrollToChild(currentPosition, (int) (positionOffset * width));
+                //调用这个方法重新绘制
             }
-
-            Log.i(TAG, "onPageScrolled:width=" + width);
-            scrollToChild(currentPosition, (int) (positionOffset * width));
-            //调用这个方法重新绘制
             invalidate();
-
             if (delegatePageListener != null) {
                 delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
@@ -494,21 +498,22 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 delegatePageListener.onPageSelected(position);
             }
 
-
             lastSelectPosition =selectCurPotition;
-            selectCurPotition =pager.getCurrentItem();
+            selectCurPotition =position-startOffet;
             Log.i("xujun", "lastSelectPosition:=" + lastSelectPosition);
             Log.i("xujun", "selectCurPotition:=" +selectCurPotition);
 
-
-            View currentTab = tabsContainer.getChildAt(selectCurPotition);
-            if((currentTab instanceof TextView)){
-                ((TextView) currentTab).setTextColor(tabSelectTextColor);
-                if(lastSelectPosition !=-1 ){
-                    TextView lastTab =(TextView) tabsContainer.getChildAt(lastSelectPosition);
-                    lastTab.setTextColor(tabTextColor);
+            if(selectCurPotition>=0){
+                View currentTab = tabsContainer.getChildAt(selectCurPotition);
+                if((currentTab instanceof TextView)){
+                    ((TextView) currentTab).setTextColor(tabSelectTextColor);
                 }
             }
+            if(lastSelectPosition >=0 ){
+                TextView lastTab =(TextView) tabsContainer.getChildAt(lastSelectPosition);
+                lastTab.setTextColor(tabTextColor);
+            }
+
 //            Logger.i("lastSelectPosition="+lastSelectPosition);
 //            Logger.i("currentPosition="+currentPosition);
 

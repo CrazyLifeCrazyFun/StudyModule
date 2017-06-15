@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.xujun.administrator.tagindicatordemo.base.LazyLoadFragment;
+import com.xujun.viewpagertabindicator.TabPagerIndicator;
+
 
 /**
  * @ explain:
@@ -36,7 +38,12 @@ public class TestFragment extends LazyLoadFragment {
         position = getArguments().getInt(ARG_POSITION);
         String[] titles = getResources().getStringArray(R.array.fragments_titles);
         mTvContent = findViewById(R.id.tv_content);
-        mTvContent.setText(titles[position]);
+        if(position>= TabPagerIndicator.startOffet){
+            mTvContent.setText(titles[position-TabPagerIndicator.startOffet]);
+
+        }else {
+            mTvContent.setText("全部分类");
+        }
         System.out.println("viewpager:"+titles[position]);
     }
 

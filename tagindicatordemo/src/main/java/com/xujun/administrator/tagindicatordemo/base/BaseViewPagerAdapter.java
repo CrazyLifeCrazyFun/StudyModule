@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.xujun.viewpagertabindicator.TabPagerIndicator;
+
 import java.util.List;
 
 /**
@@ -33,7 +35,11 @@ public class BaseViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        if(position>= TabPagerIndicator.startOffet){
+           return titles[position-TabPagerIndicator.startOffet];
+        }else {
+            return "全部分类";
+        }
     }
 
     @Override
