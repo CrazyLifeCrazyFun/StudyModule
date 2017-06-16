@@ -29,7 +29,14 @@ public abstract class LazyLoadFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(setContentView(), container, false);
+        if(null!=view){
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if(null!=parent){
+                parent.removeView(view);
+            }
+        }else {
+            view = inflater.inflate(setContentView(), container, false);
+        }
         isInit = true;
         /**初始化的时候去加载数据**/
         isCanLoadData();
