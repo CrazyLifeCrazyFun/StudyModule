@@ -155,8 +155,11 @@ public class TabPagerIndicator extends HorizontalScrollView {
         dividerPaint.setStrokeWidth(dividerWidth);
 
         wrapTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.MATCH_PARENT);
-        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
+                LayoutParams.WRAP_CONTENT);
+        wrapTabLayoutParams.gravity=Gravity.CENTER_VERTICAL;
+        expandedTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+        expandedTabLayoutParams.gravity=Gravity.CENTER_VERTICAL;
 
         if (locale == null) {
             locale = getResources().getConfiguration().locale;
@@ -332,14 +335,15 @@ public class TabPagerIndicator extends HorizontalScrollView {
             }
         });
         if (!isSame) {
-            tab.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+            tab.setPadding(horizontalPadding, 0, horizontalPadding, 0);
             wrapTabLayoutParams.setMargins(0, 0, 0, 0);
             expandedTabLayoutParams.setMargins(0, 0, 0, 0);
         } else {
-            wrapTabLayoutParams.setMargins(horizontalPadding, verticalPadding,
-                    horizontalPadding, verticalPadding);
-            expandedTabLayoutParams.setMargins(horizontalPadding, verticalPadding,
-                    horizontalPadding, verticalPadding);
+            tab.setPadding(0, 0, 0, 0);
+            wrapTabLayoutParams.setMargins(horizontalPadding, 0,
+                    horizontalPadding, 0);
+            expandedTabLayoutParams.setMargins(horizontalPadding, 0,
+                    horizontalPadding, 0);
         }
 
 
