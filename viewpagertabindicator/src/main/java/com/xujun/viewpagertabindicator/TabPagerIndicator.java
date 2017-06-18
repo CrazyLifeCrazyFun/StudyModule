@@ -118,7 +118,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
     private int tabBackgroundResId = R.drawable.background_tab;
     //Indicator的样式
-    private IndicatorMode curMode = IndicatorMode.MODE_WRAP_EXPAND_SAME;
+    private IndicatorMode curMode = IndicatorMode.MODE_WRAP_EXPAND_NOSAME;
 
     private Locale locale;
 
@@ -334,7 +334,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 pager.setCurrentItem(position+startOffet);
             }
         });
-        if (!isSame) {
+        if (isSame) {
             tab.setPadding(horizontalPadding, 0, horizontalPadding, 0);
             wrapTabLayoutParams.setMargins(0, 0, 0, 0);
             expandedTabLayoutParams.setMargins(0, 0, 0, 0);
@@ -393,7 +393,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
         int newScrollX;
         View child = tabsContainer.getChildAt(position);
         int left = child.getLeft();
-        if (isSame) {
+        if (!isSame) {
             newScrollX = left + offset - horizontalPadding;
         } else {
             newScrollX = left + offset;
@@ -457,7 +457,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
         dividerPaint.setColor(dividerColor);
         for (int i = 0; i < tabCount - 1; i++) {
             View tab = tabsContainer.getChildAt(i);
-            if (!isSame) {
+            if (isSame) {
                 canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(),
                         height - dividerPadding, dividerPaint);
             } else {
@@ -480,7 +480,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 View child = tabsContainer.getChildAt(currentPosition);
                 int width = child.getWidth();
 
-                if (isSame) {
+                if (!isSame) {
                     width += horizontalPadding * 2;
                 }
                 Log.i(TAG, "onPageScrolled:width=" + width);

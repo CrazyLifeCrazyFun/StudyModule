@@ -1,8 +1,10 @@
 package com.xujun.administrator.tagindicatordemo;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -27,6 +29,7 @@ public class PagerIndicatorActivity extends BaseActivity implements View.OnClick
     private String[] mTitles;
     private BaseViewPagerAdapter mPagerAdapter;
     private boolean first;
+    private TextView tv_all;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -37,11 +40,12 @@ public class PagerIndicatorActivity extends BaseActivity implements View.OnClick
     protected void initView() {
         mPagerIndicator = (TabPagerIndicator) findViewById(R.id.pagerIndicator);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-
+        tv_all=(TextView)findViewById(R.id.tv_all);
         mNagRoot = (RelativeLayout) findViewById(R.id.nag_root);
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mBtnStyle = (Button) findViewById(R.id.btn_style);
-
+        tv_all.setTextSize(TypedValue.COMPLEX_UNIT_PX,14);
+        tv_all.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
@@ -85,10 +89,10 @@ public class PagerIndicatorActivity extends BaseActivity implements View.OnClick
         switch (v.getId()){
             case R.id.btn_style:
                 if(!first){
-                    mPagerIndicator.setIndicatorMode(IndicatorMode.MODE_WEIGHT_EXPAND_NOSAME,
+                    mPagerIndicator.setIndicatorMode(IndicatorMode.MODE_WEIGHT_EXPAND_SAME,
                             true);
                 }else{
-                    mPagerIndicator.setIndicatorMode(IndicatorMode.MODE_WEIGHT_EXPAND_SAME,
+                    mPagerIndicator.setIndicatorMode(IndicatorMode.MODE_WEIGHT_EXPAND_NOSAME,
                             true);
                 }
                 first=!first;

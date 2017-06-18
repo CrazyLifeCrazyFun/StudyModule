@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         initListener();
 
-
     }
 
     public void setTextViewSpan(TextView view, int fontSize, int start, int end, int color) {
