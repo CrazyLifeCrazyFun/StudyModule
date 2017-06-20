@@ -3,6 +3,7 @@ package com.xujun.administrator.tagindicatordemo.base;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.xujun.viewpagertabindicator.TabPagerIndicator;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @ author：xujun on 2016/7/30 18:48
  * @ email：gdutxiaoxu@163.com
  */
-public class BaseViewPagerAdapter extends FragmentPagerAdapter {
+public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
 
     List<Fragment> data;
     String[] titles;

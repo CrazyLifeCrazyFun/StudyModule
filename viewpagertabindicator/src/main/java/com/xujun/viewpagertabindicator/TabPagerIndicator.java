@@ -485,8 +485,8 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 }
                 Log.i(TAG, "onPageScrolled:width=" + width);
                 scrollToChild(currentPosition, (int) (positionOffset * width));
-                //调用这个方法重新绘制
             }
+            //调用这个方法重新绘制
             invalidate();
             if (delegatePageListener != null) {
                 delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);

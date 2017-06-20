@@ -46,6 +46,12 @@ public class PagerIndicatorActivity extends BaseActivity implements View.OnClick
         mBtnStyle = (Button) findViewById(R.id.btn_style);
 //        tv_all.setTextSize(TypedValue.COMPLEX_UNIT_PX,14);
         tv_all.setTypeface(null, Typeface.BOLD);
+        tv_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(0);
+            }
+        });
     }
 
     @Override
