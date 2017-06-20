@@ -498,7 +498,6 @@ public class TabPagerIndicator extends HorizontalScrollView {
                     scrollToChild(0, (int) (positionOffset * width));
                 }
             }
-            }
             //调用这个方法重新绘制
             invalidate();
             if (delegatePageListener != null) {
