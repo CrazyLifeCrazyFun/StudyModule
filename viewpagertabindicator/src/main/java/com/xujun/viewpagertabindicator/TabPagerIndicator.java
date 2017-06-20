@@ -166,6 +166,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
         }
     }
 
+
     public void setIndicatorMode(IndicatorMode indicatorMode) {
         this.setIndicatorMode(indicatorMode, false);
     }
@@ -252,7 +253,6 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
     public void setViewPager(ViewPager pager) {
         this.pager = pager;
-
         if (pager.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
@@ -473,6 +473,7 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            Log.d("onPageScrolled--","position--"+position+"-----positionOffset-----"+positionOffset);
                 currentPosition = position-startOffet;
                 currentPositionOffset = positionOffset;
             if(currentPosition>=0){
@@ -485,6 +486,18 @@ public class TabPagerIndicator extends HorizontalScrollView {
                 }
                 Log.i(TAG, "onPageScrolled:width=" + width);
                 scrollToChild(currentPosition, (int) (positionOffset * width));
+            }else{
+                if(pager.getCurrentItem()<startOffet){
+                    View child = tabsContainer.getChildAt(0);
+                    int width = child.getWidth();
+
+                    if (!isSame) {
+                        width += horizontalPadding * 2;
+                    }
+                    Log.i(TAG, "onPageScrolled:width=" + width);
+                    scrollToChild(0, (int) (positionOffset * width));
+                }
+            }
             }
             //调用这个方法重新绘制
             invalidate();
@@ -509,8 +522,9 @@ public class TabPagerIndicator extends HorizontalScrollView {
 
             lastSelectPosition =selectCurPotition;
             selectCurPotition =position-startOffet;
-            Log.i("xujun", "lastSelectPosition:=" + lastSelectPosition);
-            Log.i("xujun", "selectCurPotition:=" +selectCurPotition);
+            Log.i("xujunonPageSelected", "position:=" + position);
+            Log.i("xujunonPageSelected", "lastSelectPosition:=" + lastSelectPosition);
+            Log.i("xujunonPageSelected", "selectCurPotition:=" +selectCurPotition);
 
             if(selectCurPotition>=0){
                 View currentTab = tabsContainer.getChildAt(selectCurPotition);
