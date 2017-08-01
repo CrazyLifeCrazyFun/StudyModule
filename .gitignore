@@ -27,12 +27,18 @@ proguard/
 *.ipr
 *.iws
 .idea/
-.gradle/
 
 /.idea
+.gradle
 /local.properties
+/app/build
 /build
-/gradlew
-/gradlew.bat
 
-
+app/.externalNativeBuild/
+app/CMakeLists.txt
+app/libs/
+app/proguard-rules.pro
+app/src/androidTest/
+gradle.properties
+gradlew
+gradlew.bat
