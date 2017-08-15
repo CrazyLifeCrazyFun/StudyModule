@@ -7,5 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="testDialog" parent="android:Theme.Dialog">
 
+
+    </style>
 </resources>
